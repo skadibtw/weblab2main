@@ -7,6 +7,7 @@
     <meta charset="UTF-8">
     <title>Результаты проверки</title>
     <link rel="stylesheet" href="static/index.css">
+    <link rel="icon" type="image/jpg" href="static/media/icon.png">
 </head>
 
 <body>
@@ -61,7 +62,7 @@
                 </tbody>
             </table>
 
-            <h2>Предыдущие результаты</h2>
+<%--            <h2>Предыдущие результаты</h2>
             <table id="result-table">
                 <thead>
                 <tr>
@@ -91,7 +92,7 @@
                     }
                 %>
                 </tbody>
-            </table>
+            </table>--%>
 
             <div class="navigation">
                 <a href="index.jsp">Назад к форме</a>

@@ -47,11 +47,11 @@
                     </div>
                     <div class="row">
                         <div>Выберите R:</div>
-                        <div><input type="checkbox" name="radius" value="1" onchange="updateRadius(1)">1</div>
-                        <div><input type="checkbox" name="radius" value="1.5" onchange="updateRadius(1.5)">1.5</div>
-                        <div><input type="checkbox" name="radius" value="2" onchange="updateRadius(2)">2</div>
-                        <div><input type="checkbox" name="radius" value="2.5" onchange="updateRadius(2.5)">2.5</div>
-                        <div><input type="checkbox" name="radius" value="3" onchange="updateRadius(3)">3</div>
+                        <div><input type="checkbox" name="radius" value="1">1</div>
+                        <div><input type="checkbox" name="radius" value="1.5">1.5</div>
+                        <div><input type="checkbox" name="radius" value="2" >2</div>
+                        <div><input type="checkbox" name="radius" value="2.5">2.5</div>
+                        <div><input type="checkbox" name="radius" value="3" >3</div>
                     </div>
                 </div>
                 <button class="main__block submit_button" type="submit" id="submit_button">Проверить</button>
@@ -82,7 +82,7 @@
                     <td><%= result.getY() %></td>
                     <td><%= result.getRadius() %></td>
                     <td><%= result.isInArea() ? "Попадание" : "Не попал" %></td>
-                    <td><%= new java.util.Date() %></td>
+                    <td><%= new java.util.Date(result.getTimestamp()) %></td>
                     <td><%= result.getExecutionTime() %> ms</td>
                 </tr>
                 <%
