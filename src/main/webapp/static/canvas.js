@@ -1,18 +1,18 @@
-let dots = JSON.parse(localStorage.getItem('dots')) || []; // Загружаем точки из LocalStorage
+let dots = JSON.parse(localStorage.getItem('dots')) || [];
 window.onload = function() {
     const canvas = document.getElementById('canvas');
     const ctx = canvas.getContext('2d');
     const centerX = canvas.width / 2;
     const centerY = canvas.height / 2;
 
-    let selectedR = null; // Переменная для хранения выбранного значения R
+    let selectedR = null;
 
     // Функция рисования осей и меток
     function drawAxes() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-        const axisScale = 200; // Масштаб для осей (расширили разметку)
-        const figureScale = selectedR ? selectedR * 80 : 80; // Масштаб для фигур зависит от R или начального значения
+        const axisScale = 200;
+        const figureScale = selectedR ? selectedR * 80 : 80;
 
         // Circle
         ctx.beginPath();
@@ -67,8 +67,8 @@ window.onload = function() {
 
         // X axis
         ctx.beginPath();
-        ctx.moveTo(20, centerY); // Сдвинули начало оси к краю
-        ctx.lineTo(canvas.width - 20, centerY); // Сдвинули конец оси к краю
+        ctx.moveTo(20, centerY);
+        ctx.lineTo(canvas.width - 20, centerY);
         ctx.strokeStyle = 'black';
         ctx.lineWidth = 2;
         ctx.stroke();
@@ -83,8 +83,8 @@ window.onload = function() {
 
         // Y axis
         ctx.beginPath();
-        ctx.moveTo(centerX, 20); // Сдвинули начало оси к верху
-        ctx.lineTo(centerX, canvas.height - 20); // Сдвинули конец оси к низу
+        ctx.moveTo(centerX, 20);
+        ctx.lineTo(centerX, canvas.height - 20);
         ctx.strokeStyle = 'black';
         ctx.lineWidth = 2;
         ctx.stroke();
@@ -98,7 +98,6 @@ window.onload = function() {
         ctx.fill();
     }
 
-    // Функция для рисования точки
     function drawPoint(x, y) {
         ctx.beginPath();
         ctx.arc(centerX + x, centerY - y, 5, 0, 2 * Math.PI);
@@ -106,14 +105,12 @@ window.onload = function() {
         ctx.fill();
     }
 
-    // Функция для отрисовки всех точек
     function drawAllPoints() {
         dots.forEach(function(dot) {
             drawPoint(dot.x, dot.y);
         });
     }
 
-    // Обработчик клика по канвасу
     canvas.addEventListener('click', function(event) {
         if (document.querySelector('input[name="radius"]:checked') === null) {
             showToast("Пожалуйста, выберите значение R перед нажатием на канвас.");
@@ -125,14 +122,12 @@ window.onload = function() {
         const clickY = (centerY - (event.clientY - rect.top)) / 0.85714293;
 
         const R = selectedR;
-        const x = (clickX / (R * 80)) * R; // Увеличили масштаб для точек
+        const x = (clickX / (R * 80)) * R;
         const y = (clickY / (R * 80)) * R;
 
-        // Сохраняем точку в массив
         dots.push({x: clickX * 0.83035712, y:  clickY *  0.85714293});
         localStorage.setItem('dots', JSON.stringify(dots));
 
-        // Перерисовываем оси и все точки
         drawAxes();
         drawAllPoints();
 
@@ -143,12 +138,11 @@ window.onload = function() {
     document.querySelectorAll('input[name="radius"]').forEach(radio => {
         radio.addEventListener('change', (event) => {
             selectedR = parseFloat(event.target.value);
-            drawAxes(); // Перерисовать график с новым значением R
-            drawAllPoints(); // Перерисовать все точки
+            drawAxes();
+            drawAllPoints();
         });
     });
 
-    // Инициализация начальной оси
     drawAxes();
     drawAllPoints()
 };

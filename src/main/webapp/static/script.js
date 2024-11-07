@@ -14,36 +14,43 @@ function showToast(message) {
 document.addEventListener("DOMContentLoaded", () => {
     const form = document.getElementById("form-1");
     form.addEventListener("submit", function(event) {
-    event.preventDefault(); // Отменяет стандартное поведение кнопки
+        event.preventDefault(); // Отменяет стандартное поведение формы
 
-        // Get X
-        const xSelect = document.querySelector('input[name="x"]:checked');
-        if (!xSelect) {
-            showToast("Выберите значение X.");
-            return; // Если не выбрано X, прерываем выполнение
+        // Получаем все отмеченные значения X
+        const selectedX = Array.from(document.querySelectorAll('input[name="x"]:checked')).map(input => input.value);
+        if (selectedX.length === 0) {
+            showToast("Выберите хотя бы одно значение X.");
+            return;
         }
 
-        // Get Y
+        // Получаем значение Y
         const yInput = document.getElementById("y-input").value.replace(",", ".");
-
-        // Get R
-        const rSelect = document.querySelector('input[name="radius"]:checked');
-        if (!rSelect) {
-            showToast("Выберите значение R.");
-            return; // Если не выбрано R, прерываем выполнение
-        }
-
-        // Validate Y
         if (!isValidY(yInput)) {
             showToast("Неверное значение Y. Оно должно быть числом от -3 до 3, а число знаков после запятой не должно превышать 10.");
-            return; // Если Y неверное, прерываем выполнение
+            return;
         }
 
-        event.target.submit();
-    });
+        // Получаем все отмеченные значения R
+        const selectedR = Array.from(document.querySelectorAll('input[name="radius"]:checked')).map(input => input.value);
+        if (selectedR.length === 0) {
+            showToast("Выберите хотя бы одно значение R.");
+            return;
+        }
+
+        selectedX.forEach(x => {
+            selectedR.forEach(radius => {
+                window.open( `controller?x=${x}&y=${parseFloat(yInput)}&radius=${radius}`, '_blank');
+            })
+        })
+    })
+
 
     function isValidY(value) {
         const y = parseFloat(value);
         return !isNaN(y) && y >= -3 && y <= 3;
     }
-});
+    document.getElementById("clear").addEventListener("click", function(event) {
+        localStorage.clear();
+    })
+
+    });

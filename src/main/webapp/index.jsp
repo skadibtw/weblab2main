@@ -56,6 +56,7 @@
                 </div>
                 <button class="main__block submit_button" type="submit" id="submit_button">Проверить</button>
             </form>
+            <button class="main__block clear_button" id="clear">Очистить точки с графика</button>
         </div>
 
         <div class="table-container">
