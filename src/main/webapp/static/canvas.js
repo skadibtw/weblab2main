@@ -1,4 +1,4 @@
-let dots = [];
+let dots = JSON.parse(localStorage.getItem('dots')) || []; // Загружаем точки из LocalStorage
 window.onload = function() {
     const canvas = document.getElementById('canvas');
     const ctx = canvas.getContext('2d');
@@ -129,7 +129,8 @@ window.onload = function() {
         const y = (clickY / (R * 80)) * R;
 
         // Сохраняем точку в массив
-        dots.push({x: clickX, y: clickY});
+        dots.push({x: clickX * 0.83035712, y:  clickY *  0.85714293});
+        localStorage.setItem('dots', JSON.stringify(dots));
 
         // Перерисовываем оси и все точки
         drawAxes();
@@ -149,4 +150,5 @@ window.onload = function() {
 
     // Инициализация начальной оси
     drawAxes();
+    drawAllPoints()
 };
