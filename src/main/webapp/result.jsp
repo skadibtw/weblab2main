@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ page import="ru.ifmo.se.weblab2main.ResultsBean" %>
+<%@ page import="java.util.List" %>
 <!DOCTYPE html>
 <html lang="ru-RU">
 
@@ -22,7 +23,7 @@
 
     <main class="main">
         <div class="table-container">
-            <h2>Результаты последней проверки</h2>
+            <h2>Последние 10 результатов</h2>
             <table id="result-table_2">
                 <thead>
                 <tr>
@@ -34,65 +35,34 @@
                     <th>Время выполнения</th>
                 </tr>
                 </thead>
-                <tbody>
-                <%
-                    // Получаем ResultsBean из сессии
-                    ResultsBean resultsBean = (ResultsBean) session.getAttribute("resultsBean");
-                    if (resultsBean != null && !resultsBean.getResults().isEmpty()) {
-                        // Получаем последний результат
-                        ResultsBean.Result latestResult = resultsBean.getResults().get(resultsBean.getResults().size() - 1);
-                %>
-                <tr>
-                    <td><%= latestResult.getX() %></td>
-                    <td><%= latestResult.getY() %></td>
-                    <td><%= latestResult.getRadius() %></td>
-                    <td><%= latestResult.isInArea() ? "Попадание" : "Не попал" %></td>
-                    <td><%= new java.util.Date(latestResult.getTimestamp()) %></td>
-                    <td><%= latestResult.getExecutionTime() %> ms</td>
-                </tr>
-                <%
-                } else {
-                %>
-                <tr>
-                    <td colspan="6">Результаты не найдены</td>
-                </tr>
-                <%
-                    }
-                %>
-                </tbody>
-            </table>
-
-<%--            <h2>Предыдущие результаты</h2>
-            <table id="result-table">
-                <thead>
-                <tr>
-                    <th>X</th>
-                    <th>Y</th>
-                    <th>R</th>
-                    <th>Результат</th>
-                    <th>Текущее время</th>
-                    <th>Время выполнения</th>
-                </tr>
-                </thead>
-                <tbody>
-                <%
-                    if (resultsBean != null && resultsBean.getResults().size() > 1) {
-                        for (ResultsBean.Result result : resultsBean.getResults()) {
-                %>
-                <tr>
-                    <td><%= result.getX() %></td>
-                    <td><%= result.getY() %></td>
-                    <td><%= result.getRadius() %></td>
-                    <td><%= result.isInArea() ? "Попадание" : "Не попал" %></td>
-                    <td><%= new java.util.Date(result.getTimestamp()) %></td>
-                    <td><%= result.getExecutionTime() %> ms</td>
-                </tr>
-                <%
+                    <tbody>
+                    <%
+                        ResultsBean resultsBean = (ResultsBean) session.getAttribute("resultsBean");
+                        if (resultsBean != null) {
+                            int count = 0;
+                            List<ResultsBean.Result> results = resultsBean.getResults();
+                            int totalResults = results.size();
+                            for (int i = totalResults - 1; i >= 0; i--) {
+                                ResultsBean.Result result = results.get(i);
+                                count++;
+                                if (count > 10) { break; }
+                    %>
+                    <tr>
+                        <td><%= result.getX() %></td>
+                        <td><%= result.getY() %></td>
+                        <td><%= result.getRadius() %></td>
+                        <td><%= result.isInArea() ? "Попадание" : "Не попал" %></td>
+                        <td><%= new java.util.Date(result.getTimestamp()) %></td>
+                        <td><%= result.getExecutionTime() %> ms</td>
+                    </tr>
+                    <%
+                            }
                         }
-                    }
-                %>
-                </tbody>
-            </table>--%>
+                    %>
+                    </tbody>
+                </table>
+
+
 
             <div class="navigation">
                 <a href="index.jsp">Назад к форме</a>

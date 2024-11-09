@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
         event.preventDefault(); // Отменяет стандартное поведение формы
 
         // Получаем все отмеченные значения X
-        const selectedX = Array.from(document.querySelectorAll('input[name="x"]:checked')).map(input => input.value);
+        const selectedX = Array.from(document.querySelectorAll('input[name="x[]"]:checked')).map(input => input.value);
         if (selectedX.length === 0) {
             showToast("Выберите хотя бы одно значение X.");
             return;
@@ -31,17 +31,12 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         // Получаем все отмеченные значения R
-        const selectedR = Array.from(document.querySelectorAll('input[name="radius"]:checked')).map(input => input.value);
+        const selectedR = Array.from(document.querySelectorAll('input[name="radius[]"]:checked')).map(input => input.value);
         if (selectedR.length === 0) {
             showToast("Выберите хотя бы одно значение R.");
             return;
         }
-
-        selectedX.forEach(x => {
-            selectedR.forEach(radius => {
-                window.open( `controller?x=${x}&y=${parseFloat(yInput)}&radius=${radius}`, '_blank');
-            })
-        })
+        form.submit()
     })
 
 
@@ -51,6 +46,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     document.getElementById("clear").addEventListener("click", function(event) {
         localStorage.clear();
+        window.location.reload();
     })
 
     });

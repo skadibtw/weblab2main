@@ -12,7 +12,7 @@ window.onload = function() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
         const axisScale = 200;
-        const figureScale = selectedR ? selectedR * 80 : 80;
+        const figureScale = selectedR ? selectedR * 67 : 67;
 
         // Circle
         ctx.beginPath();
@@ -112,30 +112,30 @@ window.onload = function() {
     }
 
     canvas.addEventListener('click', function(event) {
-        if (document.querySelector('input[name="radius"]:checked') === null) {
+        if (document.querySelector('input[name="radius[]"]:checked') === null) {
             showToast("Пожалуйста, выберите значение R перед нажатием на канвас.");
             return;
         }
 
         const rect = canvas.getBoundingClientRect();
-        const clickX = (event.clientX - rect.left - centerX) / 0.83035712;
-        const clickY = (centerY - (event.clientY - rect.top)) / 0.85714293;
+        const clickX = (event.clientX - rect.left - centerX);
+        const clickY = (centerY - (event.clientY - rect.top));
 
         const R = selectedR;
-        const x = (clickX / (R * 80)) * R;
-        const y = (clickY / (R * 80)) * R;
+        const x = (clickX / (R * 67)) * R;
+        const y = (clickY / (R * 67)) * R;
 
-        dots.push({x: clickX * 0.83035712, y:  clickY *  0.85714293});
+        dots.push({x: clickX, y:  clickY});
         localStorage.setItem('dots', JSON.stringify(dots));
 
         drawAxes();
         drawAllPoints();
 
-        window.location.href = `controller?x=${x.toFixed(8)}&y=${y.toFixed(8)}&radius=${selectedR}`;
+        window.location.href = `controller?x%5B%5D=${x.toFixed(8)}&y=${y.toFixed(8)}&radius%5B%5D=${selectedR}`;
     });
 
     // Обработчик выбора R
-    document.querySelectorAll('input[name="radius"]').forEach(radio => {
+    document.querySelectorAll('input[name="radius[]"]').forEach(radio => {
         radio.addEventListener('change', (event) => {
             selectedR = parseFloat(event.target.value);
             drawAxes();

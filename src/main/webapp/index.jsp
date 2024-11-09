@@ -31,27 +31,55 @@
                     <div class="row">Параметры</div>
                     <div class="row">
                         <div>Выберите X:</div>
-                        <div><input type="checkbox" name="x" value="-5">-5</div>
-                        <div><input type="checkbox" name="x" value="-4">-4</div>
-                        <div><input type="checkbox" name="x" value="-3">-3</div>
-                        <div><input type="checkbox" name="x" value="-2">-2</div>
-                        <div><input type="checkbox" name="x" value="-1">-1</div>
-                        <div><input type="checkbox" name="x" value="0">0</div>
-                        <div><input type="checkbox" name="x" value="1">1</div>
-                        <div><input type="checkbox" name="x" value="2">2</div>
-                        <div><input type="checkbox" name="x" value="3">3</div>
+                        <div><label>
+                            <input type="checkbox" name="x[]" value="-5">
+                        </label>-5</div>
+                        <div><label>
+                            <input type="checkbox" name="x[]" value="-4">
+                        </label>-4</div>
+                        <div><label>
+                            <input type="checkbox" name="x[]" value="-3">
+                        </label>-3</div>
+                        <div><label>
+                            <input type="checkbox" name="x[]" value="-2">
+                        </label>-2</div>
+                        <div><label>
+                            <input type="checkbox" name="x[]" value="-1">
+                        </label>-1</div>
+                        <div><label>
+                            <input type="checkbox" name="x[]" value="0">
+                        </label>0</div>
+                        <div><label>
+                            <input type="checkbox" name="x[]" value="1">
+                        </label>1</div>
+                        <div><label>
+                            <input type="checkbox" name="x[]" value="2">
+                        </label>2</div>
+                        <div><label>
+                            <input type="checkbox" name="x[]" value="3">
+                        </label>3</div>
                     </div>
                     <div class="row">
                         <div>Введите Y (от -3 до 3):</div>
-                        <input name="y" id="y-input" type="text" placeholder="значение от -3 до 3" maxlength="12">
+                        <label for="y-input"></label><input name="y" id="y-input" type="text" placeholder="значение от -3 до 3" maxlength="12">
                     </div>
                     <div class="row">
                         <div>Выберите R:</div>
-                        <div><input type="checkbox" name="radius" value="1">1</div>
-                        <div><input type="checkbox" name="radius" value="1.5">1.5</div>
-                        <div><input type="checkbox" name="radius" value="2" >2</div>
-                        <div><input type="checkbox" name="radius" value="2.5">2.5</div>
-                        <div><input type="checkbox" name="radius" value="3" >3</div>
+                        <div><label>
+                            <input type="checkbox" name="radius[]" value="1">
+                        </label>1</div>
+                        <div><label>
+                            <input type="checkbox" name="radius[]" value="1.5">
+                        </label>1.5</div>
+                        <div><label>
+                            <input type="checkbox" name="radius[]" value="2" >
+                        </label>2</div>
+                        <div><label>
+                            <input type="checkbox" name="radius[]" value="2.5">
+                        </label>2.5</div>
+                        <div><label>
+                            <input type="checkbox" name="radius[]" value="3" >
+                        </label>3</div>
                     </div>
                 </div>
                 <button class="main__block submit_button" type="submit" id="submit_button">Проверить</button>

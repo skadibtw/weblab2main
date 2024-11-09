@@ -16,46 +16,47 @@ public class AreaCheckServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        long startTime = System.currentTimeMillis();
+        long startTime = System.nanoTime();
         try {
-            double x = Double.parseDouble(request.getParameter("x"));
-            double y = Double.parseDouble(request.getParameter("y"));
-            double radius = Double.parseDouble(request.getParameter("radius"));
+            for (String radius : request.getParameterValues("radius[]")) {
+                double r = Double.parseDouble(radius);
 
-            // Проверка попадания точки в область
-            boolean isInArea = checkIfInArea(x, y, radius);
+                for (String x_str : request.getParameterValues("x[]")) {
+                    double x = Double.parseDouble(x_str);
+                    double y = Double.parseDouble(request.getParameter("y"));
 
-            // Получаем или создаем ResultsBean в сессии
-            HttpSession session = request.getSession();
-            ResultsBean resultsBean = (ResultsBean) session.getAttribute("resultsBean");
-            if (resultsBean == null) {
-                resultsBean = new ResultsBean();
-                session.setAttribute("resultsBean", resultsBean);
+                    boolean isInArea = checkIfInArea(x, y, r);
+
+                    HttpSession session = request.getSession();
+                    ResultsBean resultsBean = (ResultsBean) session.getAttribute("resultsBean");
+                    if (resultsBean == null) {
+                        resultsBean = new ResultsBean();
+                        session.setAttribute("resultsBean", resultsBean);
+                    }
+
+                    long executionTime = (System.nanoTime() - startTime) / 1_000_000;
+                    if (executionTime == 0) {
+                        executionTime = 1;
+                    }
+                    resultsBean.addResult(x, y, r, isInArea, executionTime);
+
+                    // Устанавливаем атрибуты для отображения результата на странице
+                    request.setAttribute("x", x);
+                    request.setAttribute("y", y);
+                    request.setAttribute("radius", radius);
+                    request.setAttribute("isInArea", isInArea);
+                    request.setAttribute("executionTime", executionTime);
+
+                }
             }
 
-            // Добавляем результат в ResultsBean
-            long executionTime = System.currentTimeMillis() - startTime;
-            resultsBean.addResult(x, y, radius, isInArea, executionTime);
-
-            // Устанавливаем атрибуты для отображения результата на странице
-            request.setAttribute("x", x);
-            request.setAttribute("y", y);
-            request.setAttribute("radius", radius);
-            request.setAttribute("isInArea", isInArea);
-            request.setAttribute("executionTime", executionTime);
 
             // Перенаправляем на result.jsp для отображения результата
             request.getRequestDispatcher("/result.jsp").forward(request, response);
 
         } catch (NumberFormatException e) {
-            // В случае неверных параметров перенаправляем на страницу ввода данных
             request.getRequestDispatcher("/index.jsp").forward(request, response);
         }
     }
 
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // Повторяем логику для метода POST
-        doGet(request, response);
-    }
 }
